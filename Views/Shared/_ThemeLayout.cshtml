@@ -67,10 +67,16 @@ The above copyright notice and this permission notice shall be included in all c
               <p>Courses</p>
             </a>
           </li>
-           <li class="nav-item ">
-            <a class="nav-link" href="./tables.html">
+           <li class="nav-item @ViewBag.DiscountStatus">
+            <a class="nav-link" asp-controller="Discount" asp-action="Index">
               <i class="material-icons">content_paste</i>
               <p>Discounts</p>
+            </a>
+          </li>
+           <li class="nav-item @ViewBag.CourseDiscountStatus">
+            <a class="nav-link" asp-controller="CourseDiscount" asp-action="Index">
+              <i class="material-icons">content_paste</i>
+              <p>CourseDiscounts</p>
             </a>
           </li>
           <li class="nav-item ">

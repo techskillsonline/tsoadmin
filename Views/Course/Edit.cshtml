@@ -1,0 +1,183 @@
+@model CourseVM
+
+@{
+    IEnumerable<KeyValuePair<string,string>> lstcategory = (IEnumerable<KeyValuePair<string,string>>)ViewData["lstcategory"]; 
+    IEnumerable<KeyValuePair<string,string>> lstdiscounts = (IEnumerable<KeyValuePair<string,string>>)ViewData["lstdiscounts"]; 
+
+}
+
+@* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+<div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Edit Course</h4>
+                  <p class="card-category">Edit Course Information with utmost Caution. </p>
+                </div>
+                <div class="card-body">
+                  <form method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Course Name</label>
+                          <input type="text" class="form-control" asp-for="CourseName">
+                          <span asp-validation-for="CourseName" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="hidden" asp-for = "Id"/>
+                          <label class="bmd-label-floating">Course Category</label>
+                          <select  class="form-control" asp-for="CategoryId">
+                              @if(lstcategory != null && lstcategory.Count() > 0)
+                              {
+                                @foreach(KeyValuePair<string,string> kv in lstcategory)
+                                {
+                                    if(@kv.Key == Model.CategoryId.ToString())
+                                    {
+                                        <option value="@kv.Key" selected>@kv.Value</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@kv.Key">@kv.Value</option>
+                                    }
+                                }
+                              }
+                          </select>
+                          <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Description</label>
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Please Specify Relevant Description</label>
+                            <textarea class="form-control" rows="5" asp-for="CourseDesc"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Offline/Online</label>
+                          <select asp-for="Mode">
+                              @foreach(var tmode in Enum.GetNames(typeof(TrainingMode)))
+                              {
+                                <option value = "@tmode">@tmode</option>
+                              }
+                          </select>
+                          <span asp-validation-for="OriginalPrice" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Venue</label>
+                          <input type="text" class="form-control" asp-for="Venue">
+                          <span asp-validation-for="Venue" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">SEO Title</label>
+                          <input type="text" class="form-control" asp-for="SEOTitle">
+                          <span asp-validation-for="SEOTitle" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Course URL</label>
+                          <input type="text" class="form-control" asp-for="CourseUrl">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Keywords</label>
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Please Specify Relevant Keywords</label>
+                            <textarea class="form-control" rows="5" asp-for="Keywords"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class = "col-md-12">
+                          <div class="form-group form-file-upload form-file-simple">
+                          <input type="text" class="form-control inputFileVisible" placeholder="Select Thumbnail...">
+                          <input class="inputFileHidden"  asp-for="Thumbnail">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class = "col-md-12">
+                          <div class="form-group form-file-upload form-file-simple">
+                          <input type="text" class="form-control inputFileVisible" placeholder="Select Poster Image...">
+                          <input class="inputFileHidden" asp-for="BigImage">
+                        </div>
+                      </div>
+                    </div>
+                     <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Video URL</label>
+                          <input type="text" class="form-control" asp-for="VideoURL">
+                        </div>
+                      </div>
+                    </div>
+                     <button type="submit" class="btn btn-primary pull-right">Update</button>
+                    <div class="clearfix"></div>
+                  </form>
+                  
+                </div>
+              </div>
+             </div>
+            <div class="col-md-4">
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="javascript:;">
+                    <img class="img" src="../assets/img/faces/marc.jpg" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+                  <h4 class="card-title">Rahul Singh</h4>
+                  <p class="card-description">
+                    You have to Think anyways, so why not Think BIG!!!!
+                    </p>
+                  <a href="javascript:;" class="btn btn-primary btn-round">Follow</a>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+
+          @section Scripts
+          {
+            //This script was added for Upload to Work
+            <script type="text/javascript">
+                   $('.form-file-simple .inputFileVisible').click(function() {
+                $(this).siblings('.inputFileHidden').trigger('click');
+              });
+
+              $('.form-file-simple .inputFileHidden').change(function() {
+              var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+              $(this).siblings('.inputFileVisible').val(filename);
+                });
+                </script>
+
+               <Partial name="_ValidationScriptsPartial"></Partial>
+          }
+          
+ 

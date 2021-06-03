@@ -1,4 +1,4 @@
-@model Course
+@model CourseVM
 
 @{
     IEnumerable<KeyValuePair<string,string>> lstcategory = (IEnumerable<KeyValuePair<string,string>>)ViewData["lstcategory"]; 
@@ -15,7 +15,7 @@
                   <p class="card-category">Add Course Information with utmost Caution. </p>
                 </div>
                 <div class="card-body">
-                  <form method="POST">
+                  <form method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -30,7 +30,6 @@
                         <div class="form-group">
                           <label class="bmd-label-floating">Course Category</label>
                           <select  class="form-control" asp-for="CategoryId">
-                              <option value = "-1">Select Course Category</option>
                               @if(lstcategory != null && lstcategory.Count() > 0)
                               {
                                 @foreach(KeyValuePair<string,string> kv in lstcategory)
@@ -39,6 +38,7 @@
                                 }
                               }
                           </select>
+                          <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
                       </div>
                     </div>
@@ -105,25 +105,35 @@
                       </div>
                     </div>
                     <div class="row">
+                      <div class = "col-md-12">
+                          <div class="form-group form-file-upload form-file-simple">
+                          <input type="text" class="form-control inputFileVisible" placeholder="Select Thumbnail...">
+                          <input class="inputFileHidden"  asp-for="Thumbnail">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class = "col-md-12">
+                          <div class="form-group form-file-upload form-file-simple">
+                          <input type="text" class="form-control inputFileVisible" placeholder="Select Poster Image...">
+                          <input class="inputFileHidden" asp-for="BigImage">
+                        </div>
+                      </div>
+                    </div>
+                     <div class="row">
                       <div class="col-md-12">
-                        <div class="form-group form-file-upload form-file-multiple">
-                          <input type="file" multiple="" class="inputFileHidden">
-                          <div class="input-group">
-                          <input type="text" class="form-control inputFileVisible" placeholder="Single File">
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-fab btn-round btn-primary">
-                          <i class="material-icons">attach_file</i>
-                          </button>
-                          </span>
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Video URL</label>
+                          <input type="text" class="form-control" asp-for="VideoURL">
                         </div>
                       </div>
                     </div>
                      <button type="submit" class="btn btn-primary pull-right">Add</button>
                     <div class="clearfix"></div>
                   </form>
+                  
                 </div>
               </div>
-            </div>
              </div>
             <div class="col-md-4">
               <div class="card card-profile">
@@ -143,8 +153,23 @@
               </div>
             </div>
           </div>
-@section Scripts
-{
-  <partial name="_ValidationScriptsPartial"></partial>
-}
+         
 
+          @section Scripts
+          {
+            //This script was added for Upload to Work
+            <script type="text/javascript">
+                   $('.form-file-simple .inputFileVisible').click(function() {
+                $(this).siblings('.inputFileHidden').trigger('click');
+              });
+
+              $('.form-file-simple .inputFileHidden').change(function() {
+              var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+              $(this).siblings('.inputFileVisible').val(filename);
+                });
+                </script>
+
+               <Partial name="_ValidationScriptsPartial"></Partial>
+          }
+          
+ 

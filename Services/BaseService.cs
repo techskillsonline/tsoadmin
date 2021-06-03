@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using admin.Data;
 using admin.Models;
@@ -25,7 +26,7 @@ namespace admin.Services
              _repo.Delete(delObj);
         }
 
-        public async System.Threading.Tasks.Task<System.Collections.Generic.List<T>> GetAsync()
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.List<T>> GetAsync()
         {
             return await _repo.GetAsync();
         }
@@ -49,6 +50,13 @@ namespace admin.Services
         {
             return _repo.GetByFilter(filter);
         }
+
+        public IQueryable<T> GetQueryable()
+        {
+            return _repo.GetQueryable();
+        }
     }
 }
+
+
 

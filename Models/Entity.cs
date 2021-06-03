@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
+
 namespace admin.Models
 {
     public abstract class BaseEntity
@@ -17,7 +18,7 @@ namespace admin.Models
         public string UpdatedBy{get;set;}
         [Required]
         public DateTime CreatedDate{get;private set;} = DateTime.UtcNow;
-        public DateTime? UpdatedDate{get;private set;}
+        public DateTime? UpdatedDate{get;set;}
         public bool IsActive{get;set;} = false;
     }
 
@@ -61,10 +62,13 @@ namespace admin.Models
         public string Venue{get;set;}
         [ForeignKey("CourseId")]
         public List<CourseItem> CourseItems{get;set;}
+
         [ForeignKey("CourseId")]
         public List<CourseDiscount> Discounts{get;set;}
 
+        [Required]
         public long CategoryId{get;set;}
+        
         public Category CourseCategory{get;set;}
 
         public string Thumbnail{get;set;}
@@ -109,13 +113,18 @@ namespace admin.Models
 
         [ForeignKey("DiscountId")]
         public List<CourseDiscount> Courses{get;set;}
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal DiscountPrice{get;set;}
+        [Required]
+        public DiscountType DiscountPriceType{get;set;}
     }
 
 
     public class CourseDiscount:BaseEntity
     {
-        public long? CourseId{get;set;}
-        public long? DiscountId{get;set;}
+        
+        public long CourseId{get;set;}
+        public long DiscountId{get;set;}
 
         public Course CourseObject{get;set;}
         public Discount DiscountObject{get;set;}
@@ -203,6 +212,12 @@ namespace admin.Models
     {
         Online = 0,
         Offline = 1
+    }
+
+    public enum DiscountType
+    {
+        Percentage = 0,
+        Flat = 1
     }
 }
 

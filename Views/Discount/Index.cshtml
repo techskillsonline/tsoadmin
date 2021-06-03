@@ -1,5 +1,4 @@
-@model IEnumerable<Course>
-@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnv  
+@model IEnumerable<Discount>
 
 <div class="row">
             <div class="col-lg-12 col-md-12">
@@ -8,30 +7,18 @@
                   <div class="nav-tabs-navigation">
                     <div class="nav-tabs-wrapper">
                     
-                        <h4 class="card-title">Course Grid</h4>
-                        <p class="card-category">Perform CRUD Operations on Courses</p>
+                        <h4 class="card-title">Discount Grid</h4>
+                        <p class="card-category">Perform CRUD Operations on Discounts</p>
                         <hr/>
                       
                       <span class="nav-tabs-title">Actions:</span>
                       <ul class="nav nav-tabs" data-tabs="tabs">
                         <li class="nav-item">
-                          <a class="nav-link active" asp-controller="Course" asp-action="Add">
+                          <a class="nav-link active" asp-controller="Discount" asp-action="Add">
                             <i class="material-icons">bug_report</i> Add
                             <div class="ripple-container"></div>
                           </a>
                         </li>
-                        @* <li class="nav-item">
-                          <a class="nav-link" asp-controller="Category" asp-action="Edit">
-                            <i class="material-icons">code</i> Edit
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" asp-controller="Category" asp-action="Remove">
-                            <i class="material-icons">cloud</i> Remove
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li> *@
                       </ul>
                     </div>
                   </div>
@@ -43,17 +30,17 @@
                         <thead>
                           <tr>
                             <th>Id</th>
-                            <th>Course Name</th>
-                            <th>Course Category</th>
-                            <th>Thumbnail</th>
-                            <th>Poster Image</th>
+                            <th>Discount Name</th>
+                            <th>Discount Desc</th>
+                            <th>Discount Code</th>
+                            <th>Discount Type</th>
                             <th>Created By</th>
                             <th>Created Date</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach(Course crs in Model)
+                          @foreach(Discount dis in Model)
                           {
                           <tr>
                             <td>
@@ -64,25 +51,20 @@
                                     <span class="check"></span>
                                   </span>
                                 </label> *@
-                                @crs.Id
+                                @dis.Id
                               </div>
                             </td>
-                            <td>@crs.CourseName</td>
-                            <td>
-                              @if(crs.CategoryId > 0)
-                              {
-                                  @crs.CourseCategory.CategoryName
-                              }
-                            </td>
-                            <td><img src="~/images/@crs.Thumbnail" alt="@crs.CourseName" width="150" height="100"/></td>
-                            <td><img src="~/images/@crs.BigImage" alt="@crs.CourseName" width="150" height="100"/></td>
-                            <td>@crs.CreatedBy</td>
-                            <td>@crs.CreatedDate</td>
+                            <td>@dis.DiscountCode</td>
+                             <td>@dis.DiscountName</td>
+                              <td>@dis.DiscountPriceType.ToString()</td>
+                               <td>@dis.DiscountPrice</td>
+                            <td>@dis.CreatedBy</td>
+                            <td>@dis.CreatedDate</td>
                             <td class="td-actions text-right">
-                              <a rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm" asp-controller="Course" asp-action="Edit" asp-route-Id="@crs.Id">
+                              <a rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm" asp-controller="Discount" asp-action="Edit" asp-route-Id="@dis.Id">
                                 <i class="material-icons">edit</i>
                               </a>
-                              <a rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm" asp-controller="Course" asp-action="Delete" asp-route-Id="@crs.Id">
+                              <a rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm" asp-controller="Discount" asp-action="Delete" asp-route-Id="@dis.Id">
                                 <i class="material-icons">close</i>
                               </a>
                             </td>

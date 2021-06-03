@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using admin.Models;
 using admin.Services;
 using admin.Services.Interfaces;
+using admin.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace admin.Controllers
@@ -16,13 +20,15 @@ namespace admin.Controllers
         private readonly ICourseService _coursesvc;
         private readonly IDiscountService _discountsvc;
         private readonly ICourseDiscountService _coursediscountsvc;
+        private readonly IWebHostEnvironment _env;
 
-        public CourseController(ICategoryService categorySvc,ICourseService courseSvc,IDiscountService discountSvc,ICourseDiscountService courseDiscountSvc)
+        public CourseController(ICategoryService categorySvc,ICourseService courseSvc,IDiscountService discountSvc,ICourseDiscountService courseDiscountSvc,IWebHostEnvironment env)
         {
             this._categorysvc = categorySvc;
             this._coursesvc = courseSvc;
             this._discountsvc = discountSvc;
             this._coursediscountsvc = courseDiscountSvc;
+            this._env = env;
         }
 
         [HttpGet]
@@ -30,7 +36,7 @@ namespace admin.Controllers
         {
             ViewBag.CourseStatus = "active";
 
-            IEnumerable<Course> lst = await _coursesvc.GetAsync();
+            IEnumerable<Course> lst = await _coursesvc.GetCourseCategory();
             return View(lst);
         }
 
@@ -43,21 +49,23 @@ namespace admin.Controllers
             ViewData["lstdiscounts"] = (await _discountsvc.GetAsync())
             .Select(j=>new KeyValuePair<string,string>(j.Id.ToString(),$"{j.DiscountName}({j.DiscountCode})")).ToList();
 
-            return View(new Course());
+            return View(new CourseVM());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Course newObj)
+        public async Task<IActionResult> Add(CourseVM newObj)
         {
+            
             if(ModelState.IsValid)
             {
-                _coursesvc.Add(newObj);
-                if(await _coursesvc.SaveChanges() >= 1)
+                if(await _coursesvc.Add(newObj,_env.WebRootPath))
                 {
-                    return RedirectToAction(nameof(Index));
+                    RedirectToAction("Index");
                 }
+
             }
-            return View();
+            
+           return await Add();
 
         }
 
@@ -77,22 +85,50 @@ namespace admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(long Id)
         {
+             ViewData["lstcategory"] = (await _categorysvc.GetAsync())
+            .Select(i=>new KeyValuePair<string,string>(i.Id.ToString(),i.CategoryName)).ToList();
+
+            ViewData["lstdiscounts"] = (await _discountsvc.GetAsync())
+            .Select(j=>new KeyValuePair<string,string>(j.Id.ToString(),$"{j.DiscountName}({j.DiscountCode})")).ToList();
+
             Course crs = await _coursesvc.GetByIdAsync(Id);
-            return View(crs);
+
+            CourseVM cvm = new CourseVM
+            {
+                CategoryId = crs.CategoryId,
+                CourseDesc = crs.CourseDesc,
+                CourseName = crs.CourseName,
+                CourseUrl = crs.CourseUrl,
+                IsActive = crs.IsActive,
+                Id = crs.Id,
+                Keywords = crs.Keywords,
+                Mode = crs.Mode,
+                OriginalPrice = crs.OriginalPrice,
+                SEOTitle = crs.SEOTitle,
+                Venue = crs.Venue,
+                VideoURL = crs.VideoURL,
+                
+            };
+
+            return View(cvm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Course editObj)
+        public async Task<IActionResult> Edit(CourseVM newObj)
         {
+            
             if(ModelState.IsValid)
             {
-                _coursesvc.Update(editObj);
-                if(await _coursesvc.SaveChanges() >= 1)
+                if(await _coursesvc.Edit(newObj,_env.WebRootPath))
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
             }
-            return View();
+
+            
+           return await Edit(newObj.Id);
+
         }
     }
 }

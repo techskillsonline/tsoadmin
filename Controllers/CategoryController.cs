@@ -52,7 +52,7 @@ namespace admin.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View();
+            return await Add();
 
         }
 
@@ -98,7 +98,7 @@ namespace admin.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View();
+            return await Edit(editCategory.Id);
         }
     }
 }

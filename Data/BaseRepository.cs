@@ -44,12 +44,18 @@ namespace admin.Data
 
         public void Update(T editObj)
         {
+            editObj.UpdatedDate = DateTime.UtcNow;
             _entity.Update(editObj);
         }
 
         public async Task<int> SaveChanges()
         {
             return await _dbcontext.SaveChangesAsync();
+        }
+
+        public IQueryable<T> GetQueryable()
+        {
+            return _entity.AsQueryable<T>();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using admin.Models;
 
@@ -25,6 +26,8 @@ namespace admin.Data
         public void Update(T editObj);
 
         Task<int> SaveChanges();
+
+        public IQueryable<T> GetQueryable();
        
     }
 }

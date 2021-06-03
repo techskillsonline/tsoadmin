@@ -1,0 +1,108 @@
+@model Discount
+
+
+@* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+<div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Edit Discount</h4>
+                  <p class="card-category">Edit Discount Information with utmost Caution. </p>
+                </div>
+                <div class="card-body">
+                  <form method="POST">
+                      <div class="row">
+                          <input type="hidden" asp-for="Id"/>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Discount Code</label>
+                          <input type="text" class="form-control" asp-for="DiscountCode">
+                          <span asp-validation-for="DiscountCode" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Discount Name</label>
+                          <input type="text" class="form-control" asp-for="DiscountName">
+                          <span asp-validation-for="DiscountName" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Discount Price</label>
+                          <input type="text" class="form-control" asp-for="DiscountPrice">
+                          <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Discount Type</label>
+                          <select asp-for="DiscountPriceType">
+                              @foreach(var pt in Enum.GetValues<DiscountType>())
+                                  {
+                                      if(Model.DiscountPriceType == pt)
+                                      {
+                                          <option value = "@pt" selected>@pt</option>
+                                          
+                                      }
+                                      else
+                                      {
+                                        <option value = "@pt">@pt</option>
+                                      }
+                                      
+                                  }
+                          </select>
+                          <span asp-validation-for="DiscountPriceType" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>Discount Description</label>
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Please Specify Relevant Description</label>
+                            <textarea class="form-control" rows="5" asp-for="DiscountDesc"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary pull-right">Update</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="javascript:;">
+                    <img class="img" src="~/assets/img/faces/marc.jpg" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+                  <h4 class="card-title">Rahul Singh</h4>
+                  <p class="card-description">
+                    You have to Think anyways, so why not Think BIG!!!!
+                    </p>
+                  <a href="javascript:;" class="btn btn-primary btn-round">Follow</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+@section Scripts
+{
+  <partial name="_ValidationScriptsPartial"></partial>
+}
+
