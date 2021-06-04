@@ -1,0 +1,159 @@
+@model User
+
+
+@* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+<div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title">Add User</h4>
+                  <p class="card-category">Add User Information with utmost Caution. </p>
+                </div>
+                <div class="card-body">
+                  <form method="POST">
+                      <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">User Name</label>
+                          <input type="text" class="form-control" asp-for="UserName">
+                          <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">User Password</label>
+                          <input type="password" class="form-control" asp-for="UserPassword">
+                          <span asp-validation-for="UserPassword" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Confirm Password</label>
+                          <input type="password" class="form-control">
+                          <span asp-validation-for="UserPassword" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">First Name</label>
+                          <input type="text" class="form-control" asp-for="FirstName">
+                          <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">LastName</label>
+                          <input type="text" class="form-control" asp-for="LastName">
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">EmailId</label>
+                          <input type="email" class="form-control" asp-for="EmailId">
+                          <span asp-validation-for="EmailId" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">PhoneNo</label>
+                          <input type="input" class="form-control" asp-for="PhoneNo">
+                          <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">UserRoleType</label>
+                          <select asp-for="UserRoleType">
+                              @foreach(var pt in Enum.GetValues<UserRole>())
+                                  {
+                                      if(Model.UserRoleType == @pt)
+                                      {
+                                          <option value = "@pt" selected>@pt</option>
+                                      }
+                                      else
+                                      {
+                                          <option value = "@pt">@pt</option>
+                                      }
+                                      
+                                  }
+                          </select>
+                          <span asp-validation-for="UserRoleType" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">SocialLoginType</label>
+                          <select asp-for="SocialLoginType">
+                              @foreach(var pt in Enum.GetValues<SocialUserType>())
+                                  {
+                                      if(Model.SocialLoginType == @pt)
+                                      {
+                                            <option value = "@pt" selected>@pt</option>
+                                      }
+                                      else
+                                      {
+                                          <option value = "@pt">@pt</option>
+                                      }
+                                      
+                                  }
+                          </select>
+                          <span asp-validation-for="SocialLoginType" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label>User Description</label>
+                          <div class="form-group">
+                            <label class="bmd-label-floating">Please Specify Relevant Description</label>
+                            <textarea class="form-control" rows="5" asp-for="UserDesc"></textarea>
+                          </div>
+                          <span asp-validation-for="UserDesc" class="text-danger"></span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary pull-right">Add</button>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="javascript:;">
+                    <img class="img" src="~/assets/img/faces/marc.jpg" />
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h6 class="card-category text-gray">CEO / Co-Founder</h6>
+                  <h4 class="card-title">Rahul Singh</h4>
+                  <p class="card-description">
+                    You have to Think anyways, so why not Think BIG!!!!
+                    </p>
+                  <a href="javascript:;" class="btn btn-primary btn-round">Follow</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+@section Scripts
+{
+  <partial name="_ValidationScriptsPartial"></partial>
+}
+

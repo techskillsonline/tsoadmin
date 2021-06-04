@@ -181,12 +181,18 @@ namespace admin.Models
         public string EmailId{get;set;}
         [MaxLength(20)]
         public string PhoneNo{get;set;}
+        [Required]
         public UserRole UserRoleType{get;set;}
 
+        [Required]
         public SocialUserType SocialLoginType{get;set;}
 
         [ForeignKey("UserId")]
         public List<Order> Orders{get;set;}
+
+        [Required]
+        [MaxLength(1000)]
+        public string UserDesc{get;set;}
 
     }
 
@@ -198,8 +204,10 @@ namespace admin.Models
 
     public enum SocialUserType
     {
+
         Facebook = 0,
-        Google = 1
+        Google = 1,
+        General = 2
     }
 
     public enum TrainingMode
