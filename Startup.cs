@@ -40,6 +40,7 @@ namespace admin
             services.AddScoped(typeof(ICourseService),typeof(CourseService));
             services.AddScoped(typeof(IDiscountService),typeof(DiscountService));
             services.AddScoped(typeof(ICourseDiscountService),typeof(CourseDiscountService));
+            services.AddScoped(typeof(IUserService),typeof(UserService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
