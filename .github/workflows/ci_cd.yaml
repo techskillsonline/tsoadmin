@@ -3,23 +3,23 @@ name: Continuous Integration using GitHub Actions
 on:
   push:
     branches:
-      -main
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      -name: Checkout Code
+      - name: Checkout Code
        uses: actions/checkout@v2
       
-      -name: Setup .Net5
+      - name: Setup .Net5
        uses: actions/setup-dotnet@v1.8.0
 
-      -name: Restore Dependencies
+      - name: Restore Dependencies
        run: dotnet restore
       
-      -name: Build Application
+      - name: Build Application
        run: dotnet build -c Release --no-restore
 
-       
+
